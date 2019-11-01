@@ -1,0 +1,57 @@
+---
+title: "HALLOWEEN"
+author: "Margaret Butler"
+date: "10/31/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(googlesheets4)
+library(tidyverse)
+library(tidyr)
+library(janitor)
+library(infer)
+
+sheets_deauth()
+trains <- read_sheet("1QV7o63fiZdNtMtLQfdwREapf8eYDjpfSRX0dgfNrB8A")
+
+```
+
+```{r}
+
+ggplot(trains, aes(x = att_start)) +
+  geom_histogram(binwidth = 1)
+
+ggplot(trains, aes(x = att_chg)) +
+  geom_histogram(binwidth = 1)
+
+lm(att_start ~ liberal, data = trains)
+
+
+```
+
+```{r}
+trains %>% 
+  ggplot(aes(x = republican, y = att_start)) +
+  geom_jitter(width = 0.1) +
+  geom_smooth(method = "lm")
+ 
+
+lm(formula = republican ~ att_start, data = trains)
+
+trains %>% 
+  ggplot(aes(as.factor(liberal), att_start)) +
+  geom_boxplot()
+
+```
+
+```{r}
+
+trains %>% 
+  ggplot(aes(att_start, age)) +
+  geom_boxplot()
+
+
+```
